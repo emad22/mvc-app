@@ -7,6 +7,9 @@
 <!-- /.box-header -->
 
     <div class="box-body">
+        <?php
+        if(false !== $privileges) {
+            ?>
         <table id="table_id" class="table direction table-bordered table-striped">
             <thead>
                 <tr>
@@ -17,7 +20,7 @@
             <tbody>
                  <?php
 
-                    if(false !== $privileges) {
+                    
                     foreach ($privileges as $privilege) {
                         ?>
                 <tr>
