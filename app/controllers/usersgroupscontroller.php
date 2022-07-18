@@ -2,6 +2,8 @@
 namespace PHPMVC\controllers;
 //use PHPMVC\models\UserModel;
 use PHPMVC\models\UserGroupModel;
+use PHPMVC\models\PrivilegesModel;
+use PHPMVC\models\UserGroupPrivilegeModel;
 use PHPMVC\LIB\InputFilter;
 use PHPMVC\LIB\helper;
 /**
@@ -23,15 +25,21 @@ class UsersGroupsController extends AbstractController{
     public function addAction(){
         $this->_lang->load('template.common');
         $this->_lang->load('usersgroups.add');
-               
+        $this->_data['privileges'] = PrivilegesModel::getAll();               
+        
         if(isset($_POST['submit'])){
-            $group = new UserGroupModel();
             
-            $group->groupName      = $this->FilterSTR($_POST['groupName']);
-                        
-            
+            $group = new UserGroupModel();           
+            $group->GroupName      = $this->FilterSTR($_POST['groupName']);
             if($group->save()){
-                $_SESSION['message'] = 'Employees Save Successfuly' ;
+                if(isset($_POST['privileges']) && is_array($_POST['privileges'])){
+                    foreach ($_POST['privileges'] as $privilegeId){
+                        $groupprivilege = new UserGroupPrivilegeModel();
+                        $groupprivilege->GroupId = $group->GroupId;
+                        $groupprivilege->PrivilegeId = $privilegeId;
+                        $groupprivilege->save(); 
+                    }
+                }
                 $this->redirect('/usersgroups/default');
             }
         }
@@ -41,10 +49,59 @@ class UsersGroupsController extends AbstractController{
     }
     
     
-    
-    
+    public function editAction(){   
+        $this->_lang->load('template.common');
+        $this->_lang->load('usersgroups.edit');
+         $id = $this->FilterInt($this->_params[0]);
+         $usersgroup= UserGroupModel::getByPK($id);
+         if($usersgroup == null){
+             $this->redirect('/usersgroups/default');
+         }
+         $this->_data['privileges'] = PrivilegesModel::getAll();
+         $this->_data['groups'] = $usersgroup;
+         $groupPrivileges = UserGroupPrivilegeModel::getBy(['GroupId'=>$usersgroup->GroupId]);
+         $extractPrivligeId = []; 
+         if($groupPrivileges !== false){
+             foreach ($groupPrivileges as $privilege){
+                 $extractPrivligeId[] = $privilege->PrivilegeId;
+             }
+         }
+         $this->_data['groupPrivileges'] = $extractPrivligeId;
+        if(isset($_POST['submit'])){
+            $usersgroup->GroupName      = $this->FilterSTR($_POST['groupName']);
+            if($usersgroup->save()){
+                if(isset($_POST['privileges']) && is_array($_POST['privileges'])){
+                    $privilegewillDeleted = array_diff($extractPrivligeId , $_POST['privileges']);
+                    $privilegewillAdded   = array_diff( $_POST['privileges'] , $extractPrivligeId);
+                    foreach ($privilegewillDeleted as $deletedPrivilege){
+                        $willdelete = UserGroupPrivilegeModel::getBy(['PrivilegeId'=>$deletedPrivilege , 'GroupId'=>$usersgroup->GroupId]);
+                        $willdelete->current()->delete();
+                    }             
+                    foreach ($privilegewillAdded as $addedPrivilege){
+                        $groupprivilege = new UserGroupPrivilegeModel();
+                        $groupprivilege->GroupId = $usersgroup->GroupId;
+                        $groupprivilege->PrivilegeId = $addedPrivilege;
+                        $groupprivilege->save(); 
+                    }
+                }
+                $this->redirect('/usersgroups/default');
+            }
+        }  
+        $this->_renderView();
+    } 
     public function deleteAction(){
-        
+         $id = $this->FilterInt($this->_params[0]);
+//         var_dump($id);
+         $group = UserGroupModel::getByPK($id);
+         $groupPrivileges = UserGroupPrivilegeModel::getBy(['GroupId'=>$group->GroupId]);
+         if($groupPrivileges !==false){
+             foreach ($groupPrivileges as $groupPrivilege){
+                 $groupPrivilege->delete();
+             }
+            }
+            if($group->delete()){
+                $this->redirect('/usersgroups/default');
+            }
     }
     
     

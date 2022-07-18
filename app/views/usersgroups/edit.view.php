@@ -8,7 +8,7 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="groupName"><?= $text_groupname?></label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="groupName" placeholder="">
+                <input type="text" class="form-control" id="exampleInputEmail1" name="groupName" placeholder="" value="<?= $groups->GroupName?> ">
             </div>
             
             <div class="form-group">
@@ -19,7 +19,7 @@
                 ?>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"  name="privileges[]" value="<?= $privilege->PrivilegeId?>">
+                        <input type="checkbox"  name="privileges[]" value="<?= $privilege->PrivilegeId?>" <?= in_array($privilege->PrivilegeId, $groupPrivileges) ? 'checked' : '' ?>>
                         <span class="span"><?= $privilege->Privilege ?></span>
                     </label>
                   </div>

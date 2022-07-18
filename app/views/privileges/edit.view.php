@@ -8,11 +8,11 @@
         <div class="box-body">
             <div class="col-xs-4">
                 <label for="privilegeName"><?= $text_privilegeName?></label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="privilege" placeholder="">
+                <input type="text" class="form-control" id="exampleInputEmail1" name="privilege" placeholder="" value="<?= $privileges->Privilege ?>">
             </div>
             <div class="col-xs-4">
                 <label for="privilegeTitle"><?= $text_privilegeTitle?></label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="PrivilegeTitle" placeholder="">
+                <input type="text" class="form-control" id="exampleInputEmail1" name="PrivilegeTitle" placeholder="" value="<?= $privileges->PrivilegeTitle ?>">
             </div>
          </div>
                  <!-- /.box-body -->

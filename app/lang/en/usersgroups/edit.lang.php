@@ -1,7 +1,7 @@
 <?php
 
-$_lang['text_title'] = 'Add Group';
-$_lang['text_add_groupname'] = 'add new group';
+$_lang['text_title'] = 'Edit Group';
+$_lang['text_add_groupname'] = 'Edit new group';
 $_lang['text_groupname'] = 'Group Name ';
 $_lang['text_privileges'] = 'Privileges  ';
 $_lang['text_useremail'] = 'user email ';

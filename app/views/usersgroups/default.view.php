@@ -24,10 +24,10 @@
                     foreach ($groups as $group) {
                         ?>
                 <tr>
-                    <td><?=$group->groupName ?></td>
+                    <td><?=$group->GroupName ?></td>
                     <td>
-                        <a href="/usersgroups/edit/<?= $group->groupId ?>"><i class="fa fa-edit"></i></a>
-                        <a href="/usersgroups/delete/<?= $group->groupId ?>" onclick="if(!confirm('<?= $text_delete_message ?>')) return false;"><i class="fa fa-trash"></i></a>
+                        <a href="/usersgroups/edit/<?= $group->GroupId ?>"><i class="fa fa-edit"></i></a>
+                        <a href="/usersgroups/delete/<?= $group->GroupId ?>" onclick="if(!confirm('<?= $text_delete_message ?>')) return false;"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php

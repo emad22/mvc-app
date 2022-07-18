@@ -27,8 +27,29 @@ class PrivilegesController extends AbstractController{
                
         if(isset($_POST['submit'])){
             $privilege = new PrivilegesModel();            
-            $privilege->privilege          = $this->FilterSTR($_POST['privilegeName']);
-            $privilege->privilegeTitle     = $this->FilterSTR($_POST['privilegeTitle']);               
+            $privilege->privilege          = $this->FilterSTR($_POST['privilege']);
+            $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);               
+            if($privilege->save()){
+                $this->redirect('/privileges/default');
+            }
+        }
+        $this->_renderView();
+    }
+    public function editAction(){   
+        $this->_lang->load('template.common');
+        $this->_lang->load('privileges.edit');
+         $id = $this->FilterInt($this->_params[0]);
+//         var_dump($id);
+         $privilege = PrivilegesModel::getByPK($id);
+         if($privilege == null){
+             $this->redirect('/privileges/default');
+         }
+         $this->_data['privileges'] = $privilege;
+//         var_dump($emp);
+        if(isset($_POST['submit'])){
+            $privilege->privilege          = $this->FilterSTR($_POST['privilege']);
+            $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);     
+            
             if($privilege->save()){
                 $this->redirect('/privileges/default');
             }
@@ -36,8 +57,18 @@ class PrivilegesController extends AbstractController{
         $this->_renderView();
     }
     
+    
+    
+    
     public function deleteAction(){
-        
+        $this->_lang->load('template.common');
+        $this->_lang->load('privileges.edit');
+         $id = $this->FilterInt($this->_params[0]);
+//         var_dump($id);
+         $privilege = PrivilegesModel::getByPK($id);
+         if($privilege->delete()){
+                $this->redirect('/privileges/default');
+            }
     }
     
     

@@ -13,7 +13,7 @@ class PrivilegesModel extends AbstractModel {
     protected static $tableSchema = array(
         'PrivilegeId'       =>self::DATA_TYPE_INT,
         'privilege'         =>self::DATA_TYPE_STR,
-        'PrivilegeTitle'         =>self::DATA_TYPE_STR
+        'PrivilegeTitle'    =>self::DATA_TYPE_STR
     );
 
 

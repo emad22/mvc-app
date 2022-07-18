@@ -7,11 +7,11 @@ class UserGroupModel extends AbstractModel {
     
     
     protected static $tableName = "app_users_groups";
-    protected static $primaryKey = "groupId";
+    protected static $primaryKey = "GroupId";
     
     protected static $tableSchema = array(
-        'groupId'       =>self::DATA_TYPE_INT,
-        'groupName'       =>self::DATA_TYPE_STR
+        'GroupId'       =>self::DATA_TYPE_INT,
+        'GroupName'       =>self::DATA_TYPE_STR
     );
 
 
