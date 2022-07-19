@@ -40,6 +40,7 @@ class UsersGroupsController extends AbstractController{
                         $groupprivilege->save(); 
                     }
                 }
+                $this->messenger->add('تم حفظ الصلاحيات  بنجاح');
                 $this->redirect('/usersgroups/default');
             }
         }

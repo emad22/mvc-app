@@ -6,6 +6,7 @@ use PHPMVC\LIB\Template\Template;
 use PHPMVC\LIB\MYSessionHandler;
 use PHPMVC\LIB\Language;
 use PHPMVC\LIB\Registry;
+use PHPMVC\LIB\Messenger;
 
 
 if(!defined('DS')){
@@ -22,14 +23,17 @@ $session->Start();
 $lang = new Language();
 
 if(!isset($session->lang)){
-    $$session->lang = APP_DEFAULT_LANG;
+    $session->lang = APP_DEFAULT_LANG;
 }
 $template = new Template($templateparts);
 
 
-$registry = Registry::getinstance();
+$registry  = Registry::getinstance();
+$messenger = Messenger::getinstance($session);
+
 $registry->session = $session;
 $registry->lang = $lang;
+$registry->messenger = $messenger;
 
 $front =  new FrontController($template , $registry);
 $front->Dispatch();

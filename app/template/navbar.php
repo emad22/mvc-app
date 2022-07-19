@@ -114,3 +114,16 @@
 		<section class="content">
 		  <!-- Small boxes (Stat box) -->
 		  <div class="row">
+<?php
+$m = $this->messenger->getMessage();
+
+if(!empty($m)):
+//    foreach ($m as $msg):
+?>
+             
+                      <p class="alert alert-<?=$m[1]?>"><?php echo $m[0] ?></p>
+<?php    
+//endforeach;
+endif;
+
+?>

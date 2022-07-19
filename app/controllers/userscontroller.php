@@ -54,8 +54,7 @@ class UsersController extends AbstractController{
          }
          $this->_data['user'] = $user;
 //         var_dump($emp);
-         if($user->delete()){
-                $_SESSION['message'] = 'user deleted Successfuly' ;
+         if($user->delete()){   
                 $this->redirect('/users/default');
             }
     }

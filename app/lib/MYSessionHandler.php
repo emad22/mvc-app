@@ -47,6 +47,10 @@ class MYSessionHandler extends \SessionHandler {
     public function __set($name, $value) {
         $_SESSION[$name]  = $value;
     }
+    public function __unset($name) {
+         unset($_SESSION[$name]);
+    }
+
     public function __get($name) {
         
         if($_SESSION[$name] !== false){

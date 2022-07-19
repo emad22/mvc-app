@@ -14,28 +14,35 @@ class PrivilegesController extends AbstractController{
     use helper;
     
     public function DefaultAction(){
+        
         $this->lang->load('template.common');
         $this->lang->load('privileges.default');
+        
         $this->_data['privileges'] = PrivilegesModel::getAll();
         $this->_renderView();
         
     }
     
-    public function addAction(){
+    public function addAction(){        
         $this->lang->load('template.common');
         $this->lang->load('privileges.add');
-               
         if(isset($_POST['submit'])){
             $privilege = new PrivilegesModel();            
             $privilege->privilege          = $this->FilterSTR($_POST['privilege']);
             $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);               
 //            var_dump($privilege);
-            if($privilege->save()){
-                $this->redirect('/privileges/default');
+            if($privilege->save()){                
+                $this->messenger->add('تم حفظ الصلاحية بنجاح');
+                $this->redirect('/privileges');
             }
+                
+                
         }
         $this->_renderView();
     }
+    
+    
+    
     public function editAction(){   
         $this->lang->load('template.common');
         $this->lang->load('privileges.edit');
@@ -52,6 +59,7 @@ class PrivilegesController extends AbstractController{
             $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);     
             
             if($privilege->save()){
+                $this->messenger->add('تم تعديل الصلاحية بنجاح');
                 $this->redirect('/privileges/default');
             }
         }
@@ -68,6 +76,10 @@ class PrivilegesController extends AbstractController{
 //         var_dump($id);
          $privilege = PrivilegesModel::getByPK($id);
          if($privilege->delete()){
+                $this->messenger->add('تم حذف الصلاحية بنجاح');
+                $this->redirect('/privileges/default');
+            } else {
+                $this->messenger->add('لا يمكن حذف الصلاحية ' , \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
                 $this->redirect('/privileges/default');
             }
     }

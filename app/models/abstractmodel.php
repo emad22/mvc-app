@@ -61,8 +61,7 @@ class AbstractModel {
         $this->PrepareValues($stmt);
         
         if($stmt->execute()){
-            var_dump($stmt);
-            die();
+//            
             $this->{STATIC::$primaryKey} = DatabaseHandler::factory()->lastInsertId();
             return true;
         }
@@ -82,18 +81,18 @@ class AbstractModel {
 /*
  * save fuction check if is on primary key call to update else call create function
  */
-//    public function save($primaryKeyCheck = true)
-//    {
-//        if(false === $primaryKeyCheck) {
-//            return $this->create();
-//        }
-//        return $this->{static::$primaryKey} === null ? $this->create() : $this->update();
-//    }
-    
-    
-    public function save(){
-        return $this->{STATIC::$primaryKey}=== null ? $this->create() : $this->update();
+    public function save($primaryKeyCheck = true)
+    {
+        if(false === $primaryKeyCheck) {
+            return $this->create();
+        }
+        return $this->{static::$primaryKey} === null ? $this->create() : $this->update();
     }
+    
+    
+//    public function save(){
+//        return $this->{STATIC::$primaryKey}=== null ? $this->create() : $this->update();
+//    }
     
     /*
      * delete SQL Statment
@@ -102,7 +101,7 @@ class AbstractModel {
         global $pdo;
         $sql = 'DELETE FROM ' .STATIC::$tableName . ' WHERE ' .STATIC::$primaryKey.'='.$this->{STATIC::$primaryKey} ;
         $stmt = DatabaseHandler::factory()->prepare($sql);
-        var_dump($stmt);
+
         return $stmt->execute();        
     }
     
@@ -158,8 +157,7 @@ class AbstractModel {
     /*
      * get specifc data By id
      */
-    public static function getByPK($pk)
-    {
+    public static function getByPK($pk) {
         $sql = 'SELECT * FROM ' . static::$tableName . '  WHERE ' . static::$primaryKey . ' = "' . $pk . '"';
         $stmt = DatabaseHandler::factory()->prepare($sql);
         if ($stmt->execute() === true) {
@@ -197,8 +195,7 @@ class AbstractModel {
 //    }
     
     
-    public static function get($sql, $options = array())
-    {
+    public static function get($sql, $options = array())    {
         $stmt = DatabaseHandler::factory()->prepare($sql);
         if (!empty($options)) {
             foreach ($options as $columnName => $type) {

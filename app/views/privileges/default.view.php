@@ -2,7 +2,7 @@
 <div class="box">
     <div class="box-header">
         
-        <a href="/privileges/add" class="btn btn-primary pull-left"><?= $text_add_new?> <a>
+        <a href="/privileges/add/" class="btn btn-primary pull-left"><?= $text_add_new?> <a>
     </div>
 <!-- /.box-header -->
 
