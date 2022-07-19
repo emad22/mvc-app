@@ -8,13 +8,16 @@ class AbstractModel {
    CONST DATA_TYPE_BOL     = \PDO::PARAM_BOOL;
    CONST DATA_TYPE_STR     = \PDO::PARAM_STR;
    CONST DATA_TYPE_INT     = \PDO::PARAM_INT;
-   CONST DATA_TYPE_DATE    = 5;
+   const DATA_TYPE_DATE = 5;
    CONST DATA_TYPE_DECIMAL = 4;
+   
+   const VALIDATE_DATE_NUMERIC = '^\d{6,8}$';
+    const DEFAULT_MYSQL_DATE = '1970-01-01';
    
    
 //   prepare sql statment
     protected function PrepareValues(\PDOStatement &$stmt){
-//        var_dump($stmt);
+        
        foreach (static::$tableSchema AS $columnName=>$type){
             if($type == 4){
                 $santizedPararm = filter_var($this->$columnName, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -23,7 +26,21 @@ class AbstractModel {
                 $stmt->bindValue(":{$columnName}", $this->$columnName,$type);
             }
         }
+        
    }
+   
+   
+//   private function PrepareValues(\PDOStatement &$stmt)
+//    {
+//        foreach (static::$tableSchema as $columnName => $type) {
+//            if ($type == 4) {
+//                $sanitizedValue = filter_var($this->$columnName, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+//                $stmt->bindValue(":{$columnName}", $sanitizedValue);
+//            } else {
+//                $stmt->bindValue(":{$columnName}", $this->$columnName, $type);
+//            }
+//        }
+//    }
    
 //   bind param 
 //   name = :name and so on
@@ -32,6 +49,7 @@ class AbstractModel {
        foreach (static::$tableSchema AS $columnName=>$type){
             $namedParam .= $columnName.'= ' .' :'.$columnName .',' ;
               }
+              
         return trim($namedParam , ',');
     }
     
@@ -40,9 +58,11 @@ class AbstractModel {
         global $pdo;
         $sql = 'INSERT INTO ' .STATIC::$tableName . ' SET ' . self::BulidNamePasamSQL() ;
         $stmt = DatabaseHandler::factory()->prepare($sql);
-        var_dump($stmt);
         $this->PrepareValues($stmt);
+        
         if($stmt->execute()){
+            var_dump($stmt);
+            die();
             $this->{STATIC::$primaryKey} = DatabaseHandler::factory()->lastInsertId();
             return true;
         }
@@ -62,6 +82,14 @@ class AbstractModel {
 /*
  * save fuction check if is on primary key call to update else call create function
  */
+//    public function save($primaryKeyCheck = true)
+//    {
+//        if(false === $primaryKeyCheck) {
+//            return $this->create();
+//        }
+//        return $this->{static::$primaryKey} === null ? $this->create() : $this->update();
+//    }
+    
     
     public function save(){
         return $this->{STATIC::$primaryKey}=== null ? $this->create() : $this->update();

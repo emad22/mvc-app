@@ -13,7 +13,8 @@ class AbstractController {
     protected $_params ;
     
     protected $_template;
-    protected $_lang;
+//    protected $_lang;
+    protected $_registry;
     
     protected $_data =  [];
 
@@ -27,9 +28,17 @@ class AbstractController {
     public function setTemplate($template){
         $this->_template = $template;
     }
-    public function setLang($lang){
-        $this->_lang = $lang;
+    public function setRegistry($registry){
+        $this->_registry = $registry;
     }
+    public function __get($name) {
+        return $this->_registry->$name;
+    }
+//    public function setLang($lang){
+//        $this->_lang = $lang;
+//    }
+    
+    
     public function setAction($actionName){
         $this->_action = $actionName;
     }
@@ -41,11 +50,11 @@ class AbstractController {
         if($this->_action  == \PHPMVC\LIB\FrontController::NOT_FOUND_ACTION || !file_exists($view)){
             $view = VIEWS_PATH . 'notfound' .DS. 'notfound.view.php';
         }
-   
-            $this->_data = array_merge($this->_data, $this->_lang->getDictionary());             
-            $this->_template->setActionViewFile($view);
-            $this->_template->setAppData($this->_data);
-            $this->_template->RenderApp();
+        $this->_data = array_merge($this->_data, $this->lang->getDictionary());             
+        $this->_template->setRegistry($this->_registry);
+        $this->_template->setActionViewFile($view);
+        $this->_template->setAppData($this->_data);
+        $this->_template->RenderApp();
 
         
     }

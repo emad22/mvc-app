@@ -29,7 +29,7 @@
                         <?php if (false !== $groups): 
                             foreach ($groups as $group): 
                             ?>
-                            <option value="<?= $group->groupId ?>"><?= $group->groupName ?></option>
+                            <option value="<?= $group->GroupId ?>"><?= $group->GroupName ?></option>
                         <?php endforeach;endif; ?>
 <!--                    <option value="0">1</option>
                     <option value="1">2</option>-->

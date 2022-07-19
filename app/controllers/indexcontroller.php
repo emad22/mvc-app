@@ -10,8 +10,8 @@ class IndexController extends AbstractController{
     
     
     public function DefaultAction(){
-        $this->_lang->load('template.common');
-        $this->_lang->load('index.default');
+        $this->lang->load('template.common');
+        $this->lang->load('index.default');
         $this->_renderView();
     }
     

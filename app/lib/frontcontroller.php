@@ -19,24 +19,23 @@ class FrontController {
     private $_params = array();
     
     private $_template;
-    private $_lang;
+//    private $_lang;
+    private $_registry;
 //    private $_sitename;
     
-    public function __construct(Template $template , Language $lang) {
-        $this->_lang  = $lang;
+    public function __construct(Template $template , Registry $registry) {
+        
         $this->_template = $template; 
+        $this->_registry  = $registry;
         $this->__Parseulr();
          
     }
     private function __Parseulr(){
         
         $url = parse_url($_SERVER['REQUEST_URI'] , PHP_URL_PATH); // get url like  /mvc-app/publi/index/test
-//        var_dump($url);
         $url= str_replace('mvc-app/public', '', $url); // for loaclhost
         $url= trim($url, '/'); // remove / from url         
-//        var_dump($url);
         $url= explode('/', $url,3);
-//        var_dump($url);
         if(isset($url[0]) && $url[0] !==''){
             $this->_controller =$url[0];
         }
@@ -67,8 +66,8 @@ class FrontController {
         $controller->setController($this->_controller);
         $controller->setAction($this->_action);
         $controller->setParams($this->_params);
-        $controller->setLang($this->_lang);
         $controller->setTemplate($this->_template);
+        $controller->setRegistry($this->_registry);
         $controller->$actionName();
     }
 }

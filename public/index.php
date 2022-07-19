@@ -5,6 +5,7 @@ use PHPMVC\LIB\FrontController;
 use PHPMVC\LIB\Template\Template;
 use PHPMVC\LIB\MYSessionHandler;
 use PHPMVC\LIB\Language;
+use PHPMVC\LIB\Registry;
 
 
 if(!defined('DS')){
@@ -18,12 +19,17 @@ $templateparts = require_once '..' . DS . 'app' . DS .'config' . DS .'templateco
 
 $session  = new MYSessionHandler();
 $session->Start();
-
-if(!isset($_SESSION['lang'])){
-    $_SESSION['lang'] = APP_DEFAULT_LANG;
-}
-$template = new Template($templateparts);
 $lang = new Language();
 
-$front =  new FrontController($template , $lang);
+if(!isset($session->lang)){
+    $$session->lang = APP_DEFAULT_LANG;
+}
+$template = new Template($templateparts);
+
+
+$registry = Registry::getinstance();
+$registry->session = $session;
+$registry->lang = $lang;
+
+$front =  new FrontController($template , $registry);
 $front->Dispatch();

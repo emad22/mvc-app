@@ -7,6 +7,7 @@ class Template {
     private  $_templateparts;
     private  $_actionView;
     private  $_data;
+    private  $_registry;
     
     
 
@@ -21,6 +22,13 @@ class Template {
         $this->_data = $data;
 //        var_dump($this->_data);
     }
+    public function setRegistry($registry){
+        $this->_registry = $registry;
+    }
+    public function __get($name) {
+        return $this->_registry->$name;
+    }
+
     private function renderTemplateStart(){
         extract($this->_data);  // data for views
         require_once TEMPLATE_PATH . 'templateStart.php';

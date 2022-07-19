@@ -15,16 +15,16 @@ class UsersGroupsController extends AbstractController{
     use InputFilter;
     use helper;
     public function DefaultAction(){
-        $this->_lang->load('template.common');
-        $this->_lang->load('usersgroups.default');
+        $this->lang->load('template.common');
+        $this->lang->load('usersgroups.default');
         $this->_data['groups'] = UserGroupModel::getAll();
         $this->_renderView();
         
     }
     
     public function addAction(){
-        $this->_lang->load('template.common');
-        $this->_lang->load('usersgroups.add');
+        $this->lang->load('template.common');
+        $this->lang->load('usersgroups.add');
         $this->_data['privileges'] = PrivilegesModel::getAll();               
         
         if(isset($_POST['submit'])){
@@ -50,8 +50,8 @@ class UsersGroupsController extends AbstractController{
     
     
     public function editAction(){   
-        $this->_lang->load('template.common');
-        $this->_lang->load('usersgroups.edit');
+        $this->lang->load('template.common');
+        $this->lang->load('usersgroups.edit');
          $id = $this->FilterInt($this->_params[0]);
          $usersgroup= UserGroupModel::getByPK($id);
          if($usersgroup == null){

@@ -13,33 +13,31 @@ class UsersController extends AbstractController{
     use InputFilter;
     use helper;
     public function DefaultAction(){
-        $this->_lang->load('template.common');
-        $this->_lang->load('users.default');
+        $this->lang->load('template.common');
+        $this->lang->load('users.default');
         $this->_data['users'] = UserModel::getAll();
         $this->_renderView();
         
     }
     
     public function addAction(){
-        $this->_lang->load('template.common');
-        $this->_lang->load('users.add');
+        $this->lang->load('template.common');
+        $this->lang->load('users.add');
         $this->_data['groups'] = UserGroupModel::getAll();
-        
         if(isset($_POST['submit'])){
             $user = new UserModel();
             
-            $user->userName      = $this->FilterSTR($_POST['username']);
-            $user->password      = sha1($this->FilterSTR($_POST['password']));
-            $user->email         = $this->FilterSTR($_POST['email']);
-            $user->phoneNumber   = $this->FilterInt($_POST['phone']);
-            $user->subscribtion  = date('Y-m-d');
-            $user->lastLogin     = date('Y-m-d H:i:s');
-            $user->groupId       = $this->FilterInt($_POST['usergroup']);
+            $user->Username      = $this->FilterSTR($_POST['username']);
+            $user->encypass($this->FilterSTR($_POST['password']));
+            $user->Email             = $this->FilterSTR($_POST['email']);
+            $user->PhoneNumber       = $this->FilterInt($_POST['phone']);
+            $user->SubscriptionDate  = date('Y-m-d');
+            $user->LastLogin         = date('Y-m-d H:i:s');
+            $user->GroupId           = $this->FilterInt($_POST['usergroup']);
+            $user->Status            = 1;
             
-//            var_dump(date('Y-m-d H:i:s'));
-            
+//            var_dump($user);         
             if($user->save()){
-                $_SESSION['message'] = 'Employees Save Successfuly' ;
                 $this->redirect('/users/default');
             }
         }

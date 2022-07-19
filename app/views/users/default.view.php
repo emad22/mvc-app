@@ -23,15 +23,15 @@
             <tbody>
                  <?php foreach ($users as $user) : ?>
                 <tr>
-                    <td><?=$user->userName ?></td>
-                    <td><?=$user->email ?></td>
-                    <td>0<?=$user->phoneNumber ?></td>
-                    <td><?=$user->subscribtion ?></td>
-                    <td><?=$user->lastLogin ?></td>
-                    <td><?=$user->groupId ?></td>
+                    <td><?=$user->Username ?></td>
+                    <td><?=$user->Email ?></td>
+                    <td><?=$user->PhoneNumber ?></td>
+                    <td><?=$user->SubscriptionDate ?></td>
+                    <td><?=$user->LastLogin ?></td>
+                    <td><?=$user->GroupName ?></td>
                     <td>
-                        <a href="/users/edit/<?= $user->userId ?>"><i class="fa fa-edit"></i></a>
-                        <a href="/users/delete/<?= $user->userId ?>" onclick="if(!confirm('<?= $text_delete_message ?>')) return false;"><i class="fa fa-trash"></i></a>
+                        <a href="/users/edit/<?= $user->UserId ?>"><i class="fa fa-edit"></i></a>
+                        <a href="/users/delete/<?= $user->UserId ?>" onclick="if(!confirm('<?= $text_delete_message ?>')) return false;"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php endforeach;  ?>

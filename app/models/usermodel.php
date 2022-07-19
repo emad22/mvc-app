@@ -1,32 +1,42 @@
 <?php
 namespace PHPMVC\models;
 class UserModel extends AbstractModel {
-    //put your code here
-    public $userId;
-    public $userName;
-    public $password;
-    public $email;
-    public $phoneNumber;
-    public $subscribtion;
-    public $lastLogin;
-    public $groupId;
+    public $UserId;
+    public $Username;
+    public $Password;
+    public $Email;
+    public $PhoneNumber;
+    public $SubscriptionDate;
+    public $LastLogin;
+    public $GroupId;
+    public $Status;
     
     
     protected static $tableName = "app_users";
-    protected static $primaryKey = "userId";
+    protected static $primaryKey = "UserId";
     
     protected static $tableSchema = array(
-        'userId'             =>self::DATA_TYPE_INT,
-        'userName'           =>self::DATA_TYPE_STR,
-        'password'           =>self::DATA_TYPE_STR,
-        'email'              =>self::DATA_TYPE_STR,
-        'phoneNumber'        =>self::DATA_TYPE_INT,
-        'subscribtion'       =>self::DATA_TYPE_STR,
-        'lastLogin'          =>self::DATA_TYPE_STR,
-        'groupId'            =>self::DATA_TYPE_INT
+        'UserId'            => self::DATA_TYPE_INT,
+        'Username'          => self::DATA_TYPE_STR,
+        'Password'          => self::DATA_TYPE_STR,
+        'Email'             => self::DATA_TYPE_STR,
+        'PhoneNumber'       => self::DATA_TYPE_STR,
+        'SubscriptionDate'  => self::DATA_TYPE_DATE,
+        'LastLogin'         => self::DATA_TYPE_DATE,
+        'GroupId'           => self::DATA_TYPE_INT,
+        'Status'            => self::DATA_TYPE_INT,
     );
+    
+    public function encypass($password){
+        $this->Password =  sha1($password);
+    }
 
-
+    public static function getUsers(UserModel $user)
+    {
+        return self::get(
+        'SELECT au.*, aug.GroupName GroupName FROM ' . self::$tableName . ' au INNER JOIN app_users_groups aug ON aug.GroupId = au.GroupId WHERE au.UserId != ' . $user->UserId
+        );
+    }
 
   
 //    public function setName($name){
