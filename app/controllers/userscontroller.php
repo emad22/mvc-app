@@ -4,6 +4,7 @@ use PHPMVC\models\UserModel;
 use PHPMVC\models\UserGroupModel;
 use PHPMVC\LIB\InputFilter;
 use PHPMVC\LIB\helper;
+use PHPMVC\LIB\Validate;
 /**
  * Description of IndexController
  *
@@ -12,6 +13,8 @@ use PHPMVC\LIB\helper;
 class UsersController extends AbstractController{
     use InputFilter;
     use helper;
+    use Validate;
+    
     
     private $_createActionRoles =
     [
@@ -34,26 +37,31 @@ class UsersController extends AbstractController{
     }
     
     public function addAction(){
+        
         $this->lang->load('template.common');
         $this->lang->load('users.add');
+        $this->lang->load('labels.label');
+        $this->lang->load('validation.errors');
+        
         $this->_data['groups'] = UserGroupModel::getAll();
         if(isset($_POST['submit'])){
             
+            $this->isValid($this->_createActionRoles , $_POST);
             $user = new UserModel();
             
-            $user->Username      = $this->FilterSTR($_POST['username']);
-            $user->encypass($this->FilterSTR($_POST['password']));
-            $user->Email             = $this->FilterSTR($_POST['email']);
-            $user->PhoneNumber       = $this->FilterInt($_POST['phone']);
+            $user->Username      = $this->FilterSTR($_POST['Username']);
+            $user->encypass($this->FilterSTR($_POST['Password']));
+            $user->Email             = $this->FilterSTR($_POST['Email']);
+            $user->PhoneNumber       = $this->FilterInt($_POST['PhoneNumber']);
             $user->SubscriptionDate  = date('Y-m-d');
             $user->LastLogin         = date('Y-m-d H:i:s');
-            $user->GroupId           = $this->FilterInt($_POST['usergroup']);
+            $user->GroupId           = $this->FilterInt($_POST['GroupId']);
             $user->Status            = 1;
             
 //            var_dump($user);         
-            if($user->save()){
-                $this->redirect('/users/default');
-            }
+//            if($user->save()){
+//                $this->redirect('/users/default');
+//            }
         }
         $this->_renderView();
     }

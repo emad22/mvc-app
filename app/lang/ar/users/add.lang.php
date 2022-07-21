@@ -2,7 +2,7 @@
 
 $_lang['text_title'] = 'إضافة مستخدم ';
 $_lang['text_add_user'] = 'إضافة مستخدم جديد';
-$_lang['text_username'] = 'اسم المستخدم';
+$_lang['text_sername'] = 'اسم المستخدم';
 $_lang['text_useremail'] = 'البريد الالكتروني';
 $_lang['text_useremail_sure'] = 'تأكيد البريد الالكتروني';
 $_lang['text_usergroup'] = 'الصلاحية' ;

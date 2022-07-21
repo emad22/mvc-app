@@ -36,12 +36,9 @@ class Messenger {
         
         if(!$this->messagesExists()){
             $this->_session->messages = [];
-        }
-        
-        $mess = $this->_session->messages;
-        
-        $mess = [$message,$type];
-        
+        }        
+        $mess = $this->_session->messages;        
+        $mess = [$message,$type];        
         $this->_session->messages =$mess;
        
         

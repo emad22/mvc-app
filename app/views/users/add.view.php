@@ -7,32 +7,32 @@
     <form autocomplete="off"  method="post" enctype="application/x-www-form-urlencoded">
         <div class="box-body">
             <div class="col-xs-4">
-                <label for="name"><?= $text_username?></label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="username" placeholder="">
+                <label for="name"><?= $text_label_Username?></label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="Username" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label for="password"><?= $text_password?></label>
-                <input type="password" class="form-control" id="" name="password" placeholder="">
+                <label for="password"><?= $text_label_Password?></label>
+                <input type="password" class="form-control" id="" name="Password" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label for="password"><?= $text_password_sure?></label>
-                <input type="password" class="form-control" id="" name="password" placeholder="">
+                <label for="password"><?= $text_label_CPassword?></label>
+                <input type="password" class="form-control" id="" name="CPassword" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label for="email"><?= $text_useremail ?></label>
-                <input type="email" class="form-control" id="address" name="email" placeholder="">
+                <label for="email"><?= $text_label_Email ?></label>
+                <input type="email" class="form-control" id="address" name="Email" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label for="email"><?= $text_useremail_sure?></label>
-                <input type="email" class="form-control" id="address" name="email" placeholder="">
+                <label for="email"><?= $text_label_CEmail?></label>
+                <input type="email" class="form-control" id="address" name="CEmail" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label for="phone"><?= $text_phone ?></label>
-                <input type="number" class="form-control" id="address" name="phone" placeholder="">
+                <label for="phone"><?= $text_label_PhoneNumber ?></label>
+                <input type="number" class="form-control" id="address" name="PhoneNumber" placeholder="">
             </div>
             <div class="col-xs-4">
-                <label><?= $text_usergroup?></label>
-                <select class="form-control" name="usergroup" required>
+                <label><?= $text_label_GroupId?></label>
+                <select class="form-control" name="GroupId" required>
                     <option value=""><?= $text_user_GroupId ?></option>
                         <?php if (false !== $groups): 
                             foreach ($groups as $group): 
