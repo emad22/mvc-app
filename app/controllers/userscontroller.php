@@ -12,6 +12,19 @@ use PHPMVC\LIB\helper;
 class UsersController extends AbstractController{
     use InputFilter;
     use helper;
+    
+    private $_createActionRoles =
+    [
+//        'FirstName'     => 'req|alpha|between(3,10)',
+//        'LastName'      => 'req|alpha|between(3,10)',
+        'Username'      => 'req|alphanum|between(3,12)',
+        'Password'      => 'req|min(6)|eq_field(CPassword)',
+        'CPassword'     => 'req|min(6)',
+        'Email'         => 'req|email|eq_field(CEmail)',
+        'CEmail'        => 'req|email',
+        'PhoneNumber'   => 'alphanum|max(15)',
+        'GroupId'       => 'req|int'
+    ];
     public function DefaultAction(){
         $this->lang->load('template.common');
         $this->lang->load('users.default');
@@ -25,6 +38,7 @@ class UsersController extends AbstractController{
         $this->lang->load('users.add');
         $this->_data['groups'] = UserGroupModel::getAll();
         if(isset($_POST['submit'])){
+            
             $user = new UserModel();
             
             $user->Username      = $this->FilterSTR($_POST['username']);

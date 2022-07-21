@@ -15,7 +15,15 @@
                 <input type="password" class="form-control" id="" name="password" placeholder="">
             </div>
             <div class="col-xs-4">
+                <label for="password"><?= $text_password_sure?></label>
+                <input type="password" class="form-control" id="" name="password" placeholder="">
+            </div>
+            <div class="col-xs-4">
                 <label for="email"><?= $text_useremail ?></label>
+                <input type="email" class="form-control" id="address" name="email" placeholder="">
+            </div>
+            <div class="col-xs-4">
+                <label for="email"><?= $text_useremail_sure?></label>
                 <input type="email" class="form-control" id="address" name="email" placeholder="">
             </div>
             <div class="col-xs-4">
@@ -24,7 +32,7 @@
             </div>
             <div class="col-xs-4">
                 <label><?= $text_usergroup?></label>
-                <select class="form-control" name="usergroup">
+                <select class="form-control" name="usergroup" required>
                     <option value=""><?= $text_user_GroupId ?></option>
                         <?php if (false !== $groups): 
                             foreach ($groups as $group): 
