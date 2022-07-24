@@ -31,13 +31,29 @@ class UserModel extends AbstractModel {
         $this->Password =  sha1($password);
     }
 
-    public static function getUsers(UserModel $user)
+//    public static function getUsers(UserModel $user)
+//    {
+//        return self::get(
+//        'SELECT au.*, aug.GroupName GroupName FROM ' . self::$tableName . ' au INNER JOIN app_users_groups aug ON aug.GroupId = au.GroupId WHERE au.UserId != ' . $user->UserId
+//        );
+//    }
+
+    
+    public static function getAll()
     {
         return self::get(
-        'SELECT au.*, aug.GroupName GroupName FROM ' . self::$tableName . ' au INNER JOIN app_users_groups aug ON aug.GroupId = au.GroupId WHERE au.UserId != ' . $user->UserId
+        'SELECT au.*, aug.GroupName GroupName FROM ' . self::$tableName . ' au INNER JOIN app_users_groups aug ON aug.GroupId = au.GroupId  ' 
         );
     }
-
+    
+    
+    
+    public static function userExists($username)
+    {
+        return self::get('
+            SELECT * FROM ' . self::$tableName . ' WHERE Username = "' . $username . '"
+        ');
+    }
   
 //    public function setName($name){
 //        $this->name = $name;

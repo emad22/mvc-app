@@ -38,7 +38,7 @@ class Messenger {
             $this->_session->messages = [];
         }        
         $mess = $this->_session->messages;        
-        $mess = [$message,$type];        
+        $mess[] = [$message,$type];        
         $this->_session->messages =$mess;
        
         

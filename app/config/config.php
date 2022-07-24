@@ -4,6 +4,7 @@ if(!defined('DS')){
     define('DS', DIRECTORY_SEPARATOR);
 }
 define('APP_PATH', dirname(realpath(__FILE__)). DS .'..' . DS);
+
 //var_dump(APP_PATH);
 define('VIEWS_PATH', APP_PATH .  'views' . DS);
 //var_dump(VIEWS_PATH);

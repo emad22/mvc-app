@@ -47,7 +47,7 @@ class AbstractModel {
     public static function  BulidNamePasamSQL(){
        $namedParam = '';
        foreach (static::$tableSchema AS $columnName=>$type){
-            $namedParam .= $columnName.'= ' .' :'.$columnName .',' ;
+            $namedParam .= $columnName.'= :' .$columnName .',' ;
               }
               
         return trim($namedParam , ',');
@@ -113,17 +113,14 @@ class AbstractModel {
         $sql = 'SELECT * FROM ' . static::$tableName ;
         $stmt = DatabaseHandler::factory()->prepare($sql);
         $stmt->execute();
-//        $results = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, get_called_class() , array_keys(static::$tableSchema) );
-//        return  (is_array($results)) && !empty($results)  ?  $results : False ;
-        // Check the construct is i or not
         if(method_exists(get_called_class(), '__construct')) {
             $results = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, get_called_class(), array_keys(static::$tableSchema));
         } else {
             $results = $stmt->fetchAll(\PDO::FETCH_CLASS, get_called_class());
         }
         if ((is_array($results) && !empty($results))) {
-//            return new \ArrayIterator($results);
-            return  (is_array($results)) && !empty($results)  ?  $results : False ;
+            return new \ArrayIterator($results);
+//            return  (is_array($results)) && !empty($results)  ?  $results : False ;
         };
         return false;
     }
@@ -134,21 +131,13 @@ class AbstractModel {
     public static function getBy($columns, $options = array())
     {
         $whereClauseColumns = array_keys($columns);
-
         $whereClauseValues = array_values($columns);
-//        var_dump($whereClauseValues);
-        
         $whereClause = [];
         for ( $i = 0, $ii = count($whereClauseColumns); $i < $ii; $i++ ) {
             $whereClause[] = $whereClauseColumns[$i] . ' = "' . $whereClauseValues[$i] . '"';
         }
-//        var_dump($ii);
-//        var_dump($whereClause);
-        
         $whereClause = implode(' AND ', $whereClause);
-        
         $sql = 'SELECT * FROM ' . static::$tableName . '  WHERE ' . $whereClause;
-//        var_dump($sql);
         return static::get($sql, $options);
     }
     

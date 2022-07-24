@@ -8,4 +8,9 @@ trait templatehelper {
         return parse_url(url: $_SERVER['REQUEST_URI'] , component: PHP_URL_PATH) === $url ;
 
     }
+    
+    public function showValue($fieldName, $object = null)
+    {
+        return isset($_POST[$fieldName]) ? $_POST[$fieldName] : (is_null($object) ? '' : $object->$fieldName);
+    }
 }

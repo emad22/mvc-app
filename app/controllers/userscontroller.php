@@ -2,6 +2,7 @@
 namespace PHPMVC\controllers;
 use PHPMVC\models\UserModel;
 use PHPMVC\models\UserGroupModel;
+use PHPMVC\models\UserProfileModel;
 use PHPMVC\LIB\InputFilter;
 use PHPMVC\LIB\helper;
 use PHPMVC\LIB\Validate;
@@ -40,13 +41,12 @@ class UsersController extends AbstractController{
         
         $this->lang->load('template.common');
         $this->lang->load('users.add');
+        $this->lang->load('users.messages');
         $this->lang->load('labels.label');
         $this->lang->load('validation.errors');
         
         $this->_data['groups'] = UserGroupModel::getAll();
-        if(isset($_POST['submit'])){
-            
-            $this->isValid($this->_createActionRoles , $_POST);
+        if(isset($_POST['submit']) && $this->isValid($this->_createActionRoles, $_POST)){
             $user = new UserModel();
             
             $user->Username      = $this->FilterSTR($_POST['Username']);
@@ -59,14 +59,28 @@ class UsersController extends AbstractController{
             $user->Status            = 1;
             
 //            var_dump($user);         
-//            if($user->save()){
-//                $this->redirect('/users/default');
-//            }
+            if(UserModel::userExists($user->Username)) {
+                $this->messenger->add($this->lang->get('message_user_exists'), \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
+                $this->redirect('/users');
+            }
+            
+            if($user->save()){
+                $userProfile = new UserProfileModel();
+                $userProfile->UserId = $user->UserId;
+                $userProfile->FirstName = $this->FilterSTR($_POST['FirstName']);
+                $userProfile->LastName = $this->FilterSTR($_POST['LastName']);
+                $userProfile->save(false);
+                $this->messenger->add($this->lang->get('message_create_success'));         
+            }else {
+                $this->messenger->add($this->lang->get('message_create_failed'), messenger::APP_MESSEGE_ERROR);
+            }
+            $this->redirect('/users/default');
         }
         $this->_renderView();
     }
     
     public function deleteAction(){
+        $this->lang->load('users.messages');
 
          $id = $this->FilterInt($this->_params[0]);
          var_dump($id);
@@ -77,9 +91,23 @@ class UsersController extends AbstractController{
          $this->_data['user'] = $user;
 //         var_dump($emp);
          if($user->delete()){   
-                $this->redirect('/users/default');
+             $this->messenger->add($this->lang->get('message_delete_success'));
+         }else{
+                $this->messenger->add($this->lang->get('message_delete_failed') , \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
             }
+                $this->redirect('/users/default');
+    }   
+
+    public function checkUserExistsAjaxAction()
+    {
+        if(isset($_POST['Username']) && !empty($_POST['Username'])) {
+            header('Content-type: text/plain');
+            if(UserModel::userExists($this->filterString($_POST['Username'])) !== false) {
+                echo 1;
+            } else {
+                echo 2;
+            }
+        }
     }
-    
     
 }

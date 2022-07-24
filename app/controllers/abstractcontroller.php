@@ -19,7 +19,7 @@ class AbstractController {
     protected $_data =  [];
 
     public function notFoundAction(){
-        $this->_lang->load('template.common');
+        $this->lang->load('template.common');
         $this->_renderView();
     }
     public function setController($controllerName){

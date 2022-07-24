@@ -34,6 +34,28 @@ class Language {
     }
     
     
+    public function feedkey($key , $data ){
+        
+        if(array_key_exists($key, $this->dictionary)) {     
+            
+//            var_dump(array_key_exists($key, $this->dictionary));
+//            echo '<pre>';
+//            var_dump($key);
+//            echo '</pre>';
+            array_unshift($data, $this->dictionary[$key]);
+//            var_dump($this->dictionary[$key]);
+            
+            return  call_user_func_array('sprintf' ,$data);;
+        }
+        
+    }
+    
+    public function get($key){
+        if(array_key_exists($key, $this->dictionary)){
+            return $this->dictionary[$key];
+        }
+    }
+
     public function getDictionary()
     {
         return $this->dictionary;

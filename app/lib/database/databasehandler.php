@@ -4,7 +4,7 @@ namespace PHPMVC\Lib\Database;
 abstract class DatabaseHandler
 {
     const DATABASE_DRIVER_POD       = 1;
-//    const DATABASE_DRIVER_MYSQLI    = 2;
+    const DATABASE_DRIVER_MYSQLI    = 2;
 
 //    private function __construct() {}
 
