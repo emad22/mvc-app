@@ -5,7 +5,7 @@ class AutoLoad{
     
     
     public static function autolaod($className) {
-//        var_dump($className);
+//        echo ($className);
         
 //        $className = str_replace('\/', '\\', $className ); //for other operationg systems
         $className = str_replace('PHPMVC', '', $className ); // \LIB\Template

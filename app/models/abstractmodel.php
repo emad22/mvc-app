@@ -97,12 +97,11 @@ class AbstractModel {
     /*
      * delete SQL Statment
      */
-    public function delete() {
-        global $pdo;
-        $sql = 'DELETE FROM ' .STATIC::$tableName . ' WHERE ' .STATIC::$primaryKey.'='.$this->{STATIC::$primaryKey} ;
+    public function delete()
+    {
+        $sql = 'DELETE FROM ' . static::$tableName . '  WHERE ' . static::$primaryKey . ' = ' . $this->{static::$primaryKey};
         $stmt = DatabaseHandler::factory()->prepare($sql);
-
-        return $stmt->execute();        
+        return $stmt->execute();
     }
     
     
@@ -146,7 +145,8 @@ class AbstractModel {
     /*
      * get specifc data By id
      */
-    public static function getByPK($pk) {
+    public static function getByPK($pk)
+    {
         $sql = 'SELECT * FROM ' . static::$tableName . '  WHERE ' . static::$primaryKey . ' = "' . $pk . '"';
         $stmt = DatabaseHandler::factory()->prepare($sql);
         if ($stmt->execute() === true) {
@@ -212,6 +212,12 @@ class AbstractModel {
             return new \ArrayIterator($results);
         };
         return false;
+    }
+    
+    
+    public static function getOne($sql, $options = array()){
+        $result = static::get($sql, $options);
+        return $result === false ? false : $result->current();
     }
 }
 

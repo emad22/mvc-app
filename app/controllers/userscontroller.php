@@ -19,13 +19,19 @@ class UsersController extends AbstractController{
     
     private $_createActionRoles =
     [
-//        'FirstName'     => 'req|alpha|between(3,10)',
-//        'LastName'      => 'req|alpha|between(3,10)',
+        'FirstName'     => 'req|alpha|between(3,10)',
+        'LastName'      => 'req|alpha|between(3,10)',
         'Username'      => 'req|alphanum|between(3,12)',
         'Password'      => 'req|min(6)|eq_field(CPassword)',
         'CPassword'     => 'req|min(6)',
         'Email'         => 'req|email|eq_field(CEmail)',
         'CEmail'        => 'req|email',
+        'PhoneNumber'   => 'alphanum|max(15)',
+        'GroupId'       => 'req|int'
+    ];
+    
+    private $_editActionRoles =
+    [
         'PhoneNumber'   => 'alphanum|max(15)',
         'GroupId'       => 'req|int'
     ];
@@ -37,18 +43,15 @@ class UsersController extends AbstractController{
         
     }
     
-    public function addAction(){
-        
+    public function addAction(){        
         $this->lang->load('template.common');
         $this->lang->load('users.add');
         $this->lang->load('users.messages');
         $this->lang->load('labels.label');
-        $this->lang->load('validation.errors');
-        
+        $this->lang->load('validation.errors');        
         $this->_data['groups'] = UserGroupModel::getAll();
         if(isset($_POST['submit']) && $this->isValid($this->_createActionRoles, $_POST)){
-            $user = new UserModel();
-            
+            $user = new UserModel();            
             $user->Username      = $this->FilterSTR($_POST['Username']);
             $user->encypass($this->FilterSTR($_POST['Password']));
             $user->Email             = $this->FilterSTR($_POST['Email']);
@@ -56,14 +59,16 @@ class UsersController extends AbstractController{
             $user->SubscriptionDate  = date('Y-m-d');
             $user->LastLogin         = date('Y-m-d H:i:s');
             $user->GroupId           = $this->FilterInt($_POST['GroupId']);
-            $user->Status            = 1;
-            
+            $user->Status            = 1;            
 //            var_dump($user);         
             if(UserModel::userExists($user->Username)) {
                 $this->messenger->add($this->lang->get('message_user_exists'), \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
-                $this->redirect('/users');
-            }
-            
+                $this->redirect('/users/add');
+            }            
+            if(UserModel::EmailExists($user->Email)) {
+                $this->messenger->add($this->lang->get('message_email_exists'), \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
+                $this->redirect('/users/add');
+            }  
             if($user->save()){
                 $userProfile = new UserProfileModel();
                 $userProfile->UserId = $user->UserId;
@@ -79,35 +84,66 @@ class UsersController extends AbstractController{
         $this->_renderView();
     }
     
+    public function editAction(){    
+        $this->lang->load('template.common');
+        $this->lang->load('users.edit');
+        $this->lang->load('users.messages');
+        $this->lang->load('labels.label');
+        $this->lang->load('validation.errors');        
+        
+        $id = $this->FilterInt($this->_params[0]);
+        $user = UserModel::getByPK($id); 
+        if($user === null){
+            $this->messenger->add($this->lang->get('message_create_failed'), messenger::APP_MESSEGE_ERROR);
+             $this->redirect('/users/default');
+         }
+        
+        $this->_data['users'] = $user;
+        
+        $this->_data['groups'] = UserGroupModel::getAll();
+        if(isset($_POST['submit']) && $this->isValid($this->_editActionRoles, $_POST)){
+            
+            $user->PhoneNumber       = $this->FilterInt($_POST['PhoneNumber']);
+            $user->GroupId           = $this->FilterInt($_POST['GroupId']);          
+//            var_dump($user);         
+                      
+            if($user->save()){
+                $this->messenger->add($this->lang->get('message_create_success'));         
+            }else {
+                $this->messenger->add($this->lang->get('message_create_failed'), messenger::APP_MESSEGE_ERROR);
+            }
+            $this->redirect('/users/default');
+        }
+        $this->_renderView();
+    }
+    
     public function deleteAction(){
         $this->lang->load('users.messages');
 
          $id = $this->FilterInt($this->_params[0]);
-         var_dump($id);
          $user = UserModel::getByPK($id);
-         if($user == null){
+         if($user === null){
              $this->redirect('/users/default');
          }
-         $this->_data['user'] = $user;
-//         var_dump($emp);
          if($user->delete()){   
              $this->messenger->add($this->lang->get('message_delete_success'));
-         }else{
+         }
+         else{
                 $this->messenger->add($this->lang->get('message_delete_failed') , \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
             }
-                $this->redirect('/users/default');
+        $this->redirect('/users/default');
     }   
-
-    public function checkUserExistsAjaxAction()
-    {
-        if(isset($_POST['Username']) && !empty($_POST['Username'])) {
-            header('Content-type: text/plain');
-            if(UserModel::userExists($this->filterString($_POST['Username'])) !== false) {
-                echo 1;
-            } else {
-                echo 2;
-            }
-        }
-    }
+//
+//    public function checkUserExistsAjaxAction()
+//    {
+//        if(isset($_POST['Username']) && !empty($_POST['Username'])) {
+//            header('Content-type: text/plain');
+//            if(UserModel::userExists($this->filterString($_POST['Username'])) !== false) {
+//                echo 1;
+//            } else {
+//                echo 2;
+//            }
+//        }
+//    }
     
 }

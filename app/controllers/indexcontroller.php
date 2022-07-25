@@ -15,9 +15,13 @@ class IndexController extends AbstractController{
         $this->lang->load('template.common');
         $this->lang->load('index.default');
         
-        $str =  '%s يجب ان لا يترك فارغا';
-        $newstr = sprintf($str, 'اسم المستخدم');
-        echo $newstr;
+//        var_dump($this->between('عماد' , 3 , 5));
+//        var_dump($this->req('عماد'));
+//        var_dump($this->alpha('عماد'));
+        
+//        $str =  '%s يجب ان لا يترك فارغا';
+//        $newstr = sprintf($str, 'اسم المستخدم');
+//        echo $newstr;
 
         $this->_renderView();
     }

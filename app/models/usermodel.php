@@ -54,6 +54,31 @@ class UserModel extends AbstractModel {
             SELECT * FROM ' . self::$tableName . ' WHERE Username = "' . $username . '"
         ');
     }
+    
+    public static function EmailExists($email)
+    {
+        return self::get('
+            SELECT * FROM ' . self::$tableName . ' WHERE Email = "' . $email . '"
+        ');
+    }
+    public static function authenticate ($username, $password, $session){
+        $password = sha1($password);
+        $sql = 'SELECT * FROM ' .self::$tableName .' WHERE Username ="' .$username .'" AND Password= "' . $password .'"';
+        $foundUser = self::getOne($sql);
+        if(false !== $foundUser) {
+            if($foundUser->Status == 2) {
+                return 2;
+            }
+            $foundUser->LastLogin = date('Y-m-d H:i:s');
+            $foundUser->save();
+            $session->u = $foundUser;
+            return 1;
+        }
+        return false;
+        
+    }
+    
+    
   
 //    public function setName($name){
 //        $this->name = $name;

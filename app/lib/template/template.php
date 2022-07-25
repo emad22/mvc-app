@@ -29,7 +29,12 @@ class Template {
         return $this->_registry->$name;
     }
 
-    private function renderTemplateStart(){
+    //to do
+    public function swapTemp($temp){
+        $this->_templateparts['template'] = $temp;
+    }
+
+        private function renderTemplateStart(){
         extract($this->_data);  // data for views
         require_once TEMPLATE_PATH . 'templateStart.php';
     }
