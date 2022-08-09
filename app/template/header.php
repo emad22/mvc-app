@@ -56,7 +56,8 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?= $this->session->u->Username ?> </span>
+              <span class="hidden-xs"><?= strtoupper( $this->session->u->profile->FirstName )?> <?= strtoupper($this->session->u->profile->LastName)?> <br> <?= $this->session->u->GroupName ?></span>
+              
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->

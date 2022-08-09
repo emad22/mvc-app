@@ -22,3 +22,4 @@ $_lang['text_no_data'] = 'لا توجد بيانات';
 $_lang['text_usersgroup'] = "مجموعات المستخدمين";
 $_lang['text_privilege'] = "الصلاحيات";
 $_lang['text_users_list'] = "قائمة المستخدمين";
+$_lang['text_accessdenied'] = "عفوا انت لا تملك صلاحية للدخول لهذه الصفحه ";

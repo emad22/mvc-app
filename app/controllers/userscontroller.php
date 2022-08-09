@@ -38,7 +38,9 @@ class UsersController extends AbstractController{
     public function DefaultAction(){
         $this->lang->load('template.common');
         $this->lang->load('users.default');
-        $this->_data['users'] = UserModel::getAll();
+        
+        $this->_data['users'] = UserModel::getUsers($this->session->u);
+//        var_dump($this->session->u);
         $this->_renderView();
         
     }
@@ -93,20 +95,19 @@ class UsersController extends AbstractController{
         
         $id = $this->FilterInt($this->_params[0]);
         $user = UserModel::getByPK($id); 
-        if($user === null){
+        
+        if($user === false || $this->session->u->UserId == $id) {
             $this->messenger->add($this->lang->get('message_create_failed'), messenger::APP_MESSEGE_ERROR);
-             $this->redirect('/users/default');
-         }
+            $this->redirect('/users');
+        }
+       
         
         $this->_data['users'] = $user;
         
         $this->_data['groups'] = UserGroupModel::getAll();
-        if(isset($_POST['submit']) && $this->isValid($this->_editActionRoles, $_POST)){
-            
+        if(isset($_POST['submit']) && $this->isValid($this->_editActionRoles, $_POST)){            
             $user->PhoneNumber       = $this->FilterInt($_POST['PhoneNumber']);
-            $user->GroupId           = $this->FilterInt($_POST['GroupId']);          
-//            var_dump($user);         
-                      
+            $user->GroupId           = $this->FilterInt($_POST['GroupId']); 
             if($user->save()){
                 $this->messenger->add($this->lang->get('message_create_success'));         
             }else {
@@ -122,9 +123,11 @@ class UsersController extends AbstractController{
 
          $id = $this->FilterInt($this->_params[0]);
          $user = UserModel::getByPK($id);
-         if($user === null){
-             $this->redirect('/users/default');
-         }
+         
+         if($user === false || $this->session->u->UserId == $id) {
+            $this->redirect('/users');
+        }
+        
          if($user->delete()){   
              $this->messenger->add($this->lang->get('message_delete_success'));
          }
@@ -133,7 +136,7 @@ class UsersController extends AbstractController{
             }
         $this->redirect('/users/default');
     }   
-//
+
 //    public function checkUserExistsAjaxAction()
 //    {
 //        if(isset($_POST['Username']) && !empty($_POST['Username'])) {

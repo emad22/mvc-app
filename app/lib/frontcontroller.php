@@ -1,6 +1,7 @@
 <?php
 namespace PHPMVC\LIB;
 use PHPMVC\LIB\Template\Template;
+use PHPMVC\LIB\helper;
 
 /**
  * Description of frontController
@@ -9,7 +10,7 @@ use PHPMVC\LIB\Template\Template;
  */
 class FrontController {
     //put your code here
-    
+    use helper;
     const NOT_FOUND_ACTION = 'notFoundAction';
     const NOT_FOUND_CONTROLLER = 'PHPMVC\controllers\\Notfoundcontroller';
     
@@ -54,20 +55,38 @@ class FrontController {
         $controllerName = 'PHPMVC\controllers\\'.ucfirst($this->_controller) . 'Controller';
         $actionName = $this->_action . 'Action';
         
-        if(!$this->_auth->isAuthorized()){
-            $controllerName = 'PHPMVC\controllers\\' . 'AuthController';
-            $actionName = 'loginAction';
-            $this->_controller = 'Auth';
-            $this->_action = 'login';
+        
+        // Check if the user is authorized to access the application
+        if(!$this->_auth->isAuthorized()) {
+//            var_dump($this->_controller , $this->_action);
+            if($this->_controller != 'auth' && $this->_action != 'login') {
+                $this->redirect('/auth/login');
+            }
+        } else {
+            // deny access to the auth/login
+//            var_dump($this->_controller , $this->_action);
+            if($this->_controller == 'auth' && $this->_action == 'login') {
+                isset($_SERVER['HTTP_REFERER']) ? $this->redirect($_SERVER['HTTP_REFERER']) : $this->redirect('/');
+            }
+            // Check if the user has access to specific url
+//            if((bool) CHECK_FOR_PRIVILEGES === true) { // (bool) 1 === true 
+//                var_dump($this->_controller , $this->_action);
+//                if(!$this->_auth->hasAccess($this->_controller, $this->_action))
+//                {
+//                    $this->redirect('/accessdenied');
+//                }
+//            }
+            if((bool) CHECK_FOR_PRIVILEGES === true) {
+                if(!$this->_auth->hasAccess($this->_controller, $this->_action)){
+    //                echo 'you dont have no access';
+                    $this->redirect('/accessdenied');
+                } 
+            }
         }
         
         
-        
-//        var_dump($controllerName , $actionName);
-//        if(!class_exists($controllerName)){
-//            $controllerName = self::NOT_FOUND_CONTROLLER;
-//        }
-        
+      
+                
         if(!class_exists($controllerName) || !method_exists($controllerName , $actionName)){
             $controllerName = self::NOT_FOUND_CONTROLLER;
             $this->_action = $actionName = self::NOT_FOUND_ACTION;

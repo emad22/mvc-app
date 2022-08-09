@@ -85,7 +85,7 @@ class Template {
             }
         }
 //        var_dump($output);
-        echo  $output;
+        return  $output;
     }
     private function renderFooterResources(){
         $output = '';
@@ -108,7 +108,7 @@ class Template {
     
     public function RenderApp(){  
         $this->renderTemplateStart();
-        $this->renderHeaderResources();        
+        echo $this->renderHeaderResources();        
         $this->renderTemplateBlock();        
         $this->renderFooterResources();
         $this->renderTemplateEnd();

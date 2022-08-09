@@ -60,9 +60,10 @@ class UsersGroupsController extends AbstractController{
          }
          $this->_data['privileges'] = PrivilegesModel::getAll();
          $this->_data['groups'] = $usersgroup;
+         
          $groupPrivileges = UserGroupPrivilegeModel::getBy(['GroupId'=>$usersgroup->GroupId]);
          $extractPrivligeId = []; 
-         if($groupPrivileges !== false){
+         if( false!== $groupPrivileges ){
              foreach ($groupPrivileges as $privilege){
                  $extractPrivligeId[] = $privilege->PrivilegeId;
              }

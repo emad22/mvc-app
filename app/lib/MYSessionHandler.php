@@ -72,7 +72,9 @@ class MYSessionHandler extends \SessionHandler {
     public function Start(){
         if(empty(session_id())){
             if(session_start()){
-                $this->SETSESSIONSTARTTIME();                
+                $this->SETSESSIONSTARTTIME();
+//                var_dump($this->SSNEWTIME);
+                
                 $this->CHECKSESSIONVALID();
             }
         }

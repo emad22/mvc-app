@@ -1,7 +1,6 @@
 <?php
 namespace PHPMVC\controllers;
-use PHPMVC\LIB\validate;
-use PHPMVC\LIB\Template;
+
 use PHPMVC\models\UserModel;
 use PHPMVC\LIB\Messenger;
 use PHPMVC\LIB\helper;
@@ -11,8 +10,7 @@ use PHPMVC\LIB\helper;
  * @author emadr
  */
 class AuthController extends AbstractController{
-    
-    use Validate;
+
     use helper;
     
     public function LoginAction(){
@@ -34,9 +32,7 @@ class AuthController extends AbstractController{
         
     }
     
-    public function logoutAction()
-    {
-        // TODO: check the cookie deletion
+    public function logoutAction(){
         $this->session->kill();
         $this->redirect('/auth/login');
     }

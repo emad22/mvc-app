@@ -1,88 +1,107 @@
 <?php
-namespace PHPMVC\controllers;
-//use PHPMVC\models\UserModel;
-use PHPMVC\models\PrivilegesModel;
+namespace PHPMVC\Controllers;
+use PHPMVC\LIB\Helper;
 use PHPMVC\LIB\InputFilter;
-use PHPMVC\LIB\helper;
-/**
- * Description of IndexController
- *
- * @author emadr
- */
-class PrivilegesController extends AbstractController{
+use PHPMVC\LIB\Messenger;
+use PHPMVC\models\PrivilegesModel;
+use PHPMVC\Models\UserGroupPrivilegeModel;
+
+class PrivilegesController extends AbstractController
+{
     use InputFilter;
-    use helper;
-    
-    public function DefaultAction(){
-        
+    use Helper;
+
+    private $_createActionRoles =
+    [
+
+    ];
+
+    public function defaultAction()
+    {
         $this->lang->load('template.common');
         $this->lang->load('privileges.default');
-        
+
         $this->_data['privileges'] = PrivilegesModel::getAll();
+
         $this->_renderView();
-        
     }
-    
-    public function addAction(){        
+
+    // TODO: we need to implement csrf prevention
+    public function addAction()
+    {
         $this->lang->load('template.common');
+//        $this->lang->load('privileges.labels');
         $this->lang->load('privileges.add');
-        if(isset($_POST['submit'])){
-            $privilege = new PrivilegesModel();            
-            $privilege->privilege          = $this->FilterSTR($_POST['privilege']);
-            $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);               
-//            var_dump($privilege);
-            if($privilege->save()){                
-                $this->messenger->add('تم حفظ الصلاحية بنجاح');
-                $this->redirect('/privileges');
-            }
-                
-                
-        }
-        $this->_renderView();
-    }
-    
-    
-    
-    public function editAction(){   
-        $this->lang->load('template.common');
-        $this->lang->load('privileges.edit');
-         $id = $this->FilterInt($this->_params[0]);
-//         var_dump($id);
-         $privilege = PrivilegesModel::getByPK($id);
-         if($privilege == null){
-             $this->redirect('/privileges/default');
-         }
-         $this->_data['privileges'] = $privilege;
-//         var_dump($emp);
-        if(isset($_POST['submit'])){
-            $privilege->privilege          = $this->FilterSTR($_POST['privilege']);
-            $privilege->PrivilegeTitle     = $this->FilterSTR($_POST['PrivilegeTitle']);     
+
+        if(isset($_POST['submit'])) {
+//            var_dump($_POST);
+            $privilege = new PrivilegesModel();
             
+            $privilege->PrivilegeTitle = $this->FilterSTR($_POST['PrivilegeTitle']);
+            
+            
+            $privilege->Privilege  = $this->FilterSTR($_POST['Privilege']);
+
             if($privilege->save()){
                 $this->messenger->add('تم تعديل الصلاحية بنجاح');
-                $this->redirect('/privileges/default');
+                $this->redirect('/privileges');
             }
         }
+
         $this->_renderView();
     }
-    
-    
-    
-    
-    public function deleteAction(){
+
+    public function editAction()
+    {
+
+        $id = $this->filterInt($this->_params[0]);
+        $privilege = PrivilegesModel::getByPK($id);
+
+        if($privilege === false) {
+            $this->redirect('/privileges');
+        }
+
+        $this->_data['privileges'] = $privilege;
+
         $this->lang->load('template.common');
+//        $this->lang->load('privileges.labels');
         $this->lang->load('privileges.edit');
-         $id = $this->FilterInt($this->_params[0]);
-//         var_dump($id);
-         $privilege = PrivilegesModel::getByPK($id);
-         if($privilege->delete()){
-                $this->messenger->add('تم حذف الصلاحية بنجاح');
-                $this->redirect('/privileges/default');
-            } else {
-                $this->messenger->add('لا يمكن حذف الصلاحية ' , \PHPMVC\LIB\Messenger::APP_MESSEGE_ERROR);
-                $this->redirect('/privileges/default');
+
+        if(isset($_POST['submit'])) {
+            $privilege->PrivilegeTitle = $this->FilterSTR($_POST['PrivilegeTitle']);
+            $privilege->Privilege = $this->FilterSTR($_POST['Privilege']);
+            if($privilege->save())
+            {
+                $this->messenger->add('تم تعديل الصلاحية بنجاح');
+                $this->redirect('/privileges');
             }
+        }
+
+        $this->_renderView();
     }
-    
-    
+
+    public function deleteAction()
+    {
+
+        $id = $this->filterInt($this->_params[0]);
+        $privilege = PrivilegesModel::getByPK($id);
+
+        if($privilege === false) {
+            $this->redirect('/privileges');
+        }
+
+        $groupPrivileges = UserGroupPrivilegeModel::getBy(['PrivilegeId' => $privilege->PrivilegeId]);
+        if(false !== $groupPrivileges) {
+            foreach ($groupPrivileges as $groupPrivilege) {
+                $groupPrivilege->delete();
+            }
+        }
+
+        if($privilege->delete())
+        {
+            $this->messenger->add('تم حذف الصلاحية بنجاح');
+            $this->redirect('/privileges');
+        }
+    }
+
 }

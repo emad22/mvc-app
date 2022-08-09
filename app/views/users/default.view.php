@@ -10,6 +10,7 @@
         <table id="table_id" class="table direction table-bordered table-striped">
             <thead>
                 <tr>
+                    
                     <th><?= $text_username?></th>
                     <th><?= $text_email ?></th>
                     <th><?= $text_phone ?></th>
@@ -23,6 +24,7 @@
             <tbody>
                  <?php foreach ($users as $user) : ?>
                 <tr>
+                    
                     <td><?=$user->Username ?></td>
                     <td><?=$user->Email ?></td>
                     <td><?=$user->PhoneNumber ?></td>

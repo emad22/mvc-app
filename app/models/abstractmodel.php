@@ -29,18 +29,9 @@ class AbstractModel {
         
    }
    
-   
-//   private function PrepareValues(\PDOStatement &$stmt)
-//    {
-//        foreach (static::$tableSchema as $columnName => $type) {
-//            if ($type == 4) {
-//                $sanitizedValue = filter_var($this->$columnName, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-//                $stmt->bindValue(":{$columnName}", $sanitizedValue);
-//            } else {
-//                $stmt->bindValue(":{$columnName}", $this->$columnName, $type);
-//            }
-//        }
-//    }
+    public static function getModelTableName(){
+            return static::$tableName;
+    }
    
 //   bind param 
 //   name = :name and so on
@@ -182,9 +173,10 @@ class AbstractModel {
 //           return  (is_array($results)) && !empty($results)  ?  $results : False ;
 //         }
 //    }
+  
+    ///////////////////////////////////////////////////////////////////////////////
     
-    
-    public static function get($sql, $options = array())    {
+    public static function get($sql, $options = array()){
         $stmt = DatabaseHandler::factory()->prepare($sql);
         if (!empty($options)) {
             foreach ($options as $columnName => $type) {
@@ -213,6 +205,8 @@ class AbstractModel {
         };
         return false;
     }
+    
+    ///////////////////////////////////////////////////////////////////////////////
     
     
     public static function getOne($sql, $options = array()){

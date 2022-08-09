@@ -21,13 +21,17 @@ $templateparts = require_once '..' . DS . 'app' . DS .'config' . DS .'templateco
 
 
 $session  = new MYSessionHandler();
-$session->Start();
 $lang = new Language();
+$template = new Template($templateparts);
+
+
+$session->Start();
+
 
 if(!isset($session->lang)){
     $session->lang = APP_DEFAULT_LANG;
 }
-$template = new Template($templateparts);
+
 
 
 $registry  = Registry::getinstance();

@@ -8,27 +8,22 @@ return [
       ':view' =>':actionView',
       'wrapperEnd' => TEMPLATE_PATH . 'wrapperEnd.php'
     ],
-   'header_resources' =>[
+   'header_resources' => [
         'css' => [
-//            'font-awesome'               => CSS. 'bootstrap\css\bootstrap.min.css',
-//            'bootstrap-rtl'              =>  CSS.'css\AdminLTE.min.css',
-//            'bootstrap'                   => CSS. 'css\skins\_all-skins.min.css',
-//            'bootstrap-rtl'                   => CSS. 'plugins/iCheck/flat/blue.css',
-//            'AdminLTE'                   =>  CSS.'plugins/morris/morris.css',
-//            'all-skins'                   => 'plugins/jvectormap/jquery-jvectormap-1.2.2.css',
-//            'blue'                          =>  'plugins/datepicker/datepicker3.css',
-//            'morris'                        =>  'plugins/daterangepicker/daterangepicker-bs3.css',
-//            'jquery-jvectormap'                   =>  'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'
-//            'main'                   => CSS . 'main' . '.css'
+//            'normalize'         => CSS . 'normalize.css',
+//            'fawsome'           => CSS . 'fawsome.min.css',
+//            'gicons'            => CSS . 'googleicons.css',
+//            'main'              => CSS . 'mainar.css'
         ],
         'js' => [
-            
+//            'modernizr'         => JS . 'vendor/modernizr-2.8.3.min.js'
         ]
     ],
-   'footer_resources' =>[
-//        'bootstrap'              => CSS . 'normalize.css',
-//        'AdminLTE'               => CSS . 'fawsome.min.css',
-//        'all-skins'              => CSS . 'googleicons.css',
+    'footer_resources' => [
+//        'jquery'                => JS . 'vendor/jquery-1.12.0.min.js',
+//        'helper'                => JS . 'helper.js',
+//        'datatables'            => JS . 'datatables.js',
+//        'main'                  => JS . 'main.js'
     ]
 ];
 

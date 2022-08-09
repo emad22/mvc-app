@@ -6,7 +6,7 @@
         if(!empty($m)):
             foreach ($m as $msg):
     ?>
-        <p class="alert alert-<?=$msg[1]?>"><?php echo $msg[0] ?></p>
+        <p class="info-box-text alert alert-<?=$msg[1]?>"><?php echo $msg[0] ?></p>
     <?php    
         endforeach;
         endif;

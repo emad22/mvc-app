@@ -24,7 +24,7 @@
                     foreach ($privileges as $privilege) {
                         ?>
                 <tr>
-                    <td><?=$privilege->Privilege ?></td>
+                    <td><?=$privilege->PrivilegeTitle ?></td>
                     <td>
                         <a href="/privileges/edit/<?= $privilege->PrivilegeId ?>"><i class="fa fa-edit"></i></a>
                         <a href="/privileges/delete/<?= $privilege->PrivilegeId ?>" onclick="if(!confirm('<?= $text_delete_message ?>')) return false;"><i class="fa fa-trash"></i></a>

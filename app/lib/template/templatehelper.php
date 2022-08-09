@@ -18,4 +18,8 @@ trait templatehelper {
     {
         return ((isset($_POST[$fieldName]) && $_POST[$fieldName] == $value) || (!is_null($object) && $object->$fieldName == $value)) ? 'selected' : '';
     }
+    public function labelFloat($fieldName, $object = null)
+    {
+        return ((isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) || (null !== $object && $object->$fieldName !== null)) ? ' class="floated"' : '';
+    }
 }

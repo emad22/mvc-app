@@ -1,6 +1,4 @@
 <?php
-
-
 namespace PHPMVC\LIB;
 
 /**
@@ -37,14 +35,7 @@ class Language {
     public function feedkey($key , $data ){
         
         if(array_key_exists($key, $this->dictionary)) {     
-            
-//            var_dump(array_key_exists($key, $this->dictionary));
-//            echo '<pre>';
-//            var_dump($key);
-//            echo '</pre>';
-            array_unshift($data, $this->dictionary[$key]);
-//            var_dump($this->dictionary[$key]);
-            
+            array_unshift($data, $this->dictionary[$key]);            
             return  call_user_func_array('sprintf' ,$data);;
         }
         

@@ -1,6 +1,7 @@
 <?php
 namespace PHPMVC\controllers;
 use PHPMVC\LIB\validate;
+use PHPMVC\models\UserGroupPrivilegeModel;
 /**
  * Description of IndexController
  *
@@ -14,7 +15,12 @@ class IndexController extends AbstractController{
     
         $this->lang->load('template.common');
         $this->lang->load('index.default');
+//        var_dump(\PHPMVC\models\UserModel::getModelTableName());
         
+//        $privilege = UserGroupPrivilegeModel::getPrivilegesForGroup( $this->session->u->GroupId);
+//        echo '<pre>';
+//        var_dump($privilege);
+//        echo '</pre>';
 //        var_dump($this->between('عماد' , 3 , 5));
 //        var_dump($this->req('عماد'));
 //        var_dump($this->alpha('عماد'));

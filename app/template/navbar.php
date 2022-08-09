@@ -27,8 +27,8 @@
                   <i class="fa fa-shopping-bag"></i>    <span><?= $text_store ?></span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu menu-open" style="display: block;">
-                  <li class="<?= $this->matchurl('/category') ? 'selected' : '' ?>"><a href="/category"><i class="fa fa-shopping-basket"></i> <?= $text_categories?></a></li>
-                  <li class="<?= $this->matchurl('/product') ? 'selected' : '' ?>"><a href="/product"><i class="fa fa-product-hunt"></i>  <?= $text_products ?></a></li>
+                  <li class="<?= $this->matchurl('/productcategories') ? 'selected' : '' ?>"><a href="/productcategories"><i class="fa fa-shopping-basket"></i> <?= $text_categories?></a></li>
+                  <li class="<?= $this->matchurl('/productlist') ? 'selected' : '' ?>"><a href="/productlist"><i class="fa fa-product-hunt"></i>  <?= $text_products ?></a></li>
                 </ul>
             </li>
             
