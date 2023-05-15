@@ -20,7 +20,7 @@
                 <div class="checkbox">
                     <label>
                         <input type="checkbox"  name="privileges[]" value="<?= $privilege->PrivilegeId?>" <?= in_array($privilege->PrivilegeId, $groupPrivileges) ? 'checked' : '' ?>>
-                        <span class="span"><?= $privilege->Privilege ?></span>
+                        <span class="span"><?= $privilege->PrivilegeTitle ?></span>
                     </label>
                   </div>
                 <?php    

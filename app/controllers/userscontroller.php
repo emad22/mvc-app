@@ -58,7 +58,8 @@ class UsersController extends AbstractController{
             $user->encypass($this->FilterSTR($_POST['Password']));
             $user->Email             = $this->FilterSTR($_POST['Email']);
             $user->PhoneNumber       = $this->FilterInt($_POST['PhoneNumber']);
-            $user->SubscriptionDate  = date('Y-m-d');
+            $user->SubscriptionDate  = date('Y-m-d H:i:s');
+//            var_dump($user);
             $user->LastLogin         = date('Y-m-d H:i:s');
             $user->GroupId           = $this->FilterInt($_POST['GroupId']);
             $user->Status            = 1;            
