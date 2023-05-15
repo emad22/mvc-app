@@ -1,7 +1,12 @@
-<div class="container">
-    <a href="/productlist/create" class="button"><i class="fa fa-plus"></i> <?= $text_new_item ?></a>
-    <table class="data">
-        <thead>
+
+<div class="box">
+    <div class="box-header">        
+        <a href="/productcategories/create" class="btn btn-primary pull-left"><?= $text_new_item ?> <a>
+    </div>
+<!-- /.box-header -->
+    <div class="box-body">        
+        <table id="table_id" class="table direction table-bordered table-striped">
+            <thead>
             <tr>
                 <th><?= $text_table_name ?></th>
                 <th><?= $text_table_category ?></th>
@@ -10,9 +15,11 @@
                 <th><?= $text_table_quantity ?></th>
                 <th><?= $text_table_control ?></th>
             </tr>
-        </thead>
-        <tbody>
-        <?php if(false !== $products): foreach ($products as $product): ?>
+            </thead>
+           
+            <tbody>
+                 
+            <?php if(false !== $products): foreach ($products as $product): ?>
             <tr>
                 <td><?= $product->Name ?></td>
                 <td><?= $product->categoryName ?></td>
@@ -25,6 +32,9 @@
                 </td>
             </tr>
         <?php endforeach; endif; ?>
-        </tbody>
-    </table>
+        </table>
+    </div>
+<!-- /.box-body -->
 </div>
+ <!-- /.row -->
+
