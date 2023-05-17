@@ -2,8 +2,10 @@
 namespace PHPMVC\models;
 use PHPMVC\Lib\Database\DatabaseHandler;
 class AbstractModel {
-   // protected static $tableName;
-    
+    // protected static $tableName;
+    // protected static $tableSchema;
+    // protected static $primaryKey;
+
 //    DATA Type Which i used
    CONST DATA_TYPE_BOL     = \PDO::PARAM_BOOL;
    CONST DATA_TYPE_STR     = \PDO::PARAM_STR;
@@ -12,7 +14,8 @@ class AbstractModel {
    CONST DATA_TYPE_DECIMAL = 4;
    
    const VALIDATE_DATE_NUMERIC = '^\d{6,8}$';
-    const DEFAULT_MYSQL_DATE = '1970-01-01';
+   const DEFAULT_MYSQL_DATE = '1970-01-01';
+   const VALIDATE_DATE_STRING = '/^[1-2][0-9][0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:0[1-9])|(?:(?:1|2)[0-9])|(?:3[0-1]))$/';
    
    
 //   prepare sql statment

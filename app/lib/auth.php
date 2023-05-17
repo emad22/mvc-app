@@ -44,7 +44,7 @@ class Auth
     public function hasAccess($controller, $action)
     {
         $url = strtolower('/' . $controller . '/' . $action);
-//        echo $url;
+    //    echo $url;
         if(in_array($url, $this->_execludedRoutes) || in_array($url, $this->_session->u->privileges)) {
             return true;
         }

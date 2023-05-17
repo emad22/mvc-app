@@ -71,7 +71,7 @@
             
             
             <li>
-                <a href="/auth/logout">
+                <a href="">
                       <i class="fa fa-bell-o"></i> <span><?= $text_notifications ?></span>
                       <!--<small class="label pull-right bg-yellow">12</small>-->
                 </a>

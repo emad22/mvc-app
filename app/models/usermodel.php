@@ -14,6 +14,9 @@ class UserModel extends AbstractModel {
     
     protected static $tableName = "app_users";
     protected static $primaryKey = "UserId";
+
+    public $profile;
+    public $privileges;
     
     protected static $tableSchema = array(
         'UserId'            => self::DATA_TYPE_INT,
@@ -61,7 +64,7 @@ class UserModel extends AbstractModel {
             $foundUser->LastLogin = date('Y-m-d H:i:s');
             $foundUser->save();
             $foundUser->profile = UserProfileModel::getByPK($foundUser->UserId);
-            $foundUser->Privilege = UserGroupPrivilegeModel::getPrivilegesForGroup($foundUser->GroupId);
+            $foundUser->privileges = UserGroupPrivilegeModel::getPrivilegesForGroup($foundUser->GroupId);
             $session->u = $foundUser;
             return 1;
         }

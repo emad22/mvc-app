@@ -43,7 +43,7 @@ defined('APP_DEFAULT_LANG')     ? null : define ('APP_DEFAULT_LANG', 'ar');
 // SALT
 defined('APP_SALT')     ? null : define ('APP_SALT', '$2a$07$yeNCSNwRpYopOhv0TrrReP$');
 // Check for access privileges
-defined('CHECK_FOR_PRIVILEGES') ? null : define('CHECK_FOR_PRIVILEGES', 0); // to prevent the page access change to 1
+defined('CHECK_FOR_PRIVILEGES') ? null : define('CHECK_FOR_PRIVILEGES', 1); // to prevent the page access change to 1
 
 // define the path to our uploaded files
 //defined('SESSION_SAVE_PATH') ? null : define('SESSION_SAVE_PATH' , APP_PATH . '..' . DS .'sessions') ;
