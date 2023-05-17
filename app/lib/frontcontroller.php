@@ -12,7 +12,7 @@ class FrontController {
     //put your code here
     use helper;
     const NOT_FOUND_ACTION = 'notFoundAction';
-    const NOT_FOUND_CONTROLLER = 'PHPMVC\controllers\\Notfoundcontroller';
+    const NOT_FOUND_CONTROLLER = 'PHPMVC\controllers\Notfoundcontroller';
     
     
     private $_controller = 'index';
@@ -36,6 +36,7 @@ class FrontController {
     private function __Parseulr(){
         
         $url = parse_url($_SERVER['REQUEST_URI'] , PHP_URL_PATH); // get url like  /mvc-app/publi/index/test
+        // var_dump($url);
         $url= str_replace('mvc-app/public', '', $url); // for loaclhost
         $url= trim($url, '/'); // remove / from url         
         $url= explode('/', $url,3);
@@ -62,7 +63,7 @@ class FrontController {
             if($this->_controller != 'auth' && $this->_action != 'login') {
                 $this->redirect('/auth/login');
             }
-        } else {
+        }else {
             // deny access to the auth/login
 //            var_dump($this->_controller , $this->_action);
             if($this->_controller == 'auth' && $this->_action == 'login') {
@@ -82,10 +83,7 @@ class FrontController {
                     $this->redirect('/accessdenied');
                 } 
             }
-        }
-        
-        
-      
+        } 
                 
         if(!class_exists($controllerName) || !method_exists($controllerName , $actionName)){
             $controllerName = self::NOT_FOUND_CONTROLLER;

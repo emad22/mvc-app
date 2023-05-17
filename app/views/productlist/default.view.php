@@ -1,7 +1,7 @@
 
 <div class="box">
     <div class="box-header">        
-        <a href="/productcategories/create" class="btn btn-primary pull-left"><?= $text_new_item ?> <a>
+        <a href="/productlist/create" class="btn btn-primary pull-left"><?= $text_new_item ?> <a>
     </div>
 <!-- /.box-header -->
     <div class="box-body">        

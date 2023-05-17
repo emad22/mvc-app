@@ -19,6 +19,7 @@ class AbstractController {
     protected $_data =  [];
 
     public function notFoundAction(){
+        //echo "This Method Dont exist";
         $this->lang->load('template.common');
         $this->_renderView();
     }
@@ -46,6 +47,10 @@ class AbstractController {
         $this->_params = $params;
     } 
     protected function _renderView(){
+
+        //echo $this->_controller ,$this->_action;
+
+
         $view =  VIEWS_PATH . $this->_controller .DS. $this->_action .'.view.php';
         if($this->_action  == \PHPMVC\LIB\FrontController::NOT_FOUND_ACTION || !file_exists($view)){
             $view = VIEWS_PATH . 'notfound' .DS. 'notfound.view.php';
